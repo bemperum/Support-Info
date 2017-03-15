@@ -7,6 +7,7 @@
  */
 using System;
 using System.Net;
+using System.Management;
 
 namespace Support_Info
 {
@@ -21,12 +22,14 @@ namespace Support_Info
 		public string UserName;
 		public string Computer;
 		public string IPAddress;
+		public string ComputerModel;
 		
 		public SysInfo()
 		{
 			this.UserName = GetUser();
 			this.Computer = GetComputer();
 			this.IPAddress = GetIP();
+			this.ComputerModel = GetComputerModel();
 		}
 		
 		private string GetUser()
@@ -55,5 +58,21 @@ namespace Support_Info
 			
 			return ips;
     	}
+		
+		private string GetComputerModel()
+		{
+			SelectQuery query = new SelectQuery(@"Select * from Win32_ComputerSystem");
+			string computerModel = "";
+			
+			using (ManagementObjectSearcher searcher = new ManagementObjectSearcher(query))
+			{
+				foreach (ManagementObject process in searcher.Get())
+				{
+					process.Get();
+					computerModel = process["Model"].ToString();
+				}
+			}
+			return computerModel;
+		}
 	}
 }

@@ -34,6 +34,7 @@ namespace Support_Info
 			lblName.Text = sysinfo.UserName;
 			lblComputer.Text = sysinfo.Computer;
 			lblIP.Text = sysinfo.IPAddress;
+			lblModel.Text = sysinfo.ComputerModel;
 		}
 		
 		void BtnExitClick(object sender, EventArgs e)
